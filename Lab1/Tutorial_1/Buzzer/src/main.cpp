@@ -20,6 +20,16 @@ void setup() {
   delay(500);
   ledcWriteNote(BUZZ_CHANNEL, NOTE_E, octave);
   delay(500);
+  ledcWriteNote(BUZZ_CHANNEL, NOTE_F, octave);
+  delay(500);
+  ledcWriteNote(BUZZ_CHANNEL, NOTE_G, octave);
+  delay(500);
+  ledcWriteNote(BUZZ_CHANNEL, NOTE_A, octave);
+  delay(500);
+  ledcWriteNote(BUZZ_CHANNEL, NOTE_B, octave);
+  delay(500);
+  ledcWriteNote(BUZZ_CHANNEL, NOTE_C, octave+1);
+  delay(500);
   noTone(BUZZ_CHANNEL);
 }
 
