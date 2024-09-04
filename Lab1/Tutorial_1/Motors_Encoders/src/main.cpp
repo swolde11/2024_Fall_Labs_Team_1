@@ -6,10 +6,10 @@ const unsigned int M1_ENC_B = 38;
 const unsigned int M2_ENC_A = 37;
 const unsigned int M2_ENC_B = 36;
 
-const unsigned int M1_IN_1;
-const unsigned int M1_IN_2;
-const unsigned int M2_IN_1;
-const unsigned int M2_IN_2;
+const unsigned int M1_IN_1 = 13;
+const unsigned int M1_IN_2 = 12;
+const unsigned int M2_IN_1 = 25;
+const unsigned int M2_IN_2 = 14;
 
 const unsigned int M1_IN_1_CHANNEL = 8;
 const unsigned int M1_IN_2_CHANNEL = 9;
@@ -55,28 +55,44 @@ void loop() {
   Encoder enc2(M2_ENC_A, M2_ENC_B);
 
   while(true) {
-    long enc1_value = enc1.read();
-    long enc2_value = enc2.read();
+    long enc1_value;
+    long enc2_value;
 
-    while (enc1_value < 360 && enc2_value < 360) {
+    while (enc1_value < 360 || enc2_value > -360) {
+
+      enc1_value = enc1.read();
+      enc2_value = enc2.read();
+
       ledcWrite(M1_IN_1_CHANNEL, 150);
       ledcWrite(M1_IN_2_CHANNEL, 0);
       ledcWrite(M2_IN_1_CHANNEL, 150);
       ledcWrite(M2_IN_2_CHANNEL, 0);
+
+      Serial.println("Encoder value 1: " + String(enc1_value));
+      Serial.println("Encoder value 2: " + String(enc2_value));
     }
     
     delay(5000);
 
-    while (enc1_value > 0 && enc2_value > 0) {
+    while (enc1_value > 0 || enc2_value < 0) {
+
+      enc1_value = enc1.read();
+      enc2_value = enc2.read();
+
       ledcWrite(M1_IN_1_CHANNEL, 0);
       ledcWrite(M1_IN_2_CHANNEL, 150);
       ledcWrite(M2_IN_1_CHANNEL, 0);
       ledcWrite(M2_IN_2_CHANNEL, 150);
+
+      Serial.println("Encoder value 1: " + String(enc1_value));
+      Serial.println("Encoder value 2: " + String(enc2_value));
     }
 
     ledcWrite(M1_IN_1_CHANNEL, 0);
     ledcWrite(M1_IN_2_CHANNEL, 0);
     ledcWrite(M2_IN_1_CHANNEL, 0);
     ledcWrite(M2_IN_2_CHANNEL, 0);
+
+    while(1);
   }
 }
