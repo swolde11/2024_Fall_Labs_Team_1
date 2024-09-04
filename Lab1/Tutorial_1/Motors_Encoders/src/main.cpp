@@ -57,5 +57,26 @@ void loop() {
   while(true) {
     long enc1_value = enc1.read();
     long enc2_value = enc2.read();
+
+    while (enc1_value < 360 && enc2_value < 360) {
+      ledcWrite(M1_IN_1_CHANNEL, 150);
+      ledcWrite(M1_IN_2_CHANNEL, 0);
+      ledcWrite(M2_IN_1_CHANNEL, 150);
+      ledcWrite(M2_IN_2_CHANNEL, 0);
+    }
+    
+    delay(5000);
+
+    while (enc1_value > 0 && enc2_value > 0) {
+      ledcWrite(M1_IN_1_CHANNEL, 0);
+      ledcWrite(M1_IN_2_CHANNEL, 150);
+      ledcWrite(M2_IN_1_CHANNEL, 0);
+      ledcWrite(M2_IN_2_CHANNEL, 150);
+    }
+
+    ledcWrite(M1_IN_1_CHANNEL, 0);
+    ledcWrite(M1_IN_2_CHANNEL, 0);
+    ledcWrite(M2_IN_1_CHANNEL, 0);
+    ledcWrite(M2_IN_2_CHANNEL, 0);
   }
 }
